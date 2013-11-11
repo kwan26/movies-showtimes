@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+     <script src="scripts/jquery.min.js"></script>
+        <script src="scripts/mustache.js"></script>
+        
+    <script src="scripts/app.js"></script>
+  </head>
+    <body style="">
+    <div id="login" style="display: none;">
+        <button id="login-btn" class="button">Login</button>
+    </div>
+    <div id="popup-content" style="display: block;">
+        <div id="feedly">
+            <div id="feedly-section">
+            <img src="/images/icon.png"><a href="javascript:void(0)" id="website">Movies Sessions near by</a>
+            </div>
+            <div id="all-read-section" style="display: none;">
+                <span id="update-feeds"><i class="icon-refresh"></i></span>
+                <i class="icon-ok"></i><span id="mark-all-read"></span>
+            </div>
+            <div class="clear"></div>
+            <button id="btn-feeds" class="tab active-tab">Feeds</button>
+            <button id="btn-feeds-saved" class="tab">Saved</button>
+        </div>
+        <div id="feed"></div>
+        <div id="feed-saved" style="display: none;"></div>
+        <div id="feed-empty">Service is down</div>
+    </div>
+    <div id="loading" style="display: none;">
+        <img src="/loading_red.gif" alt="loading...">
+    </div>
+
+        <div id ="movies"></div>
+
+    </body>
+ </html>
+
