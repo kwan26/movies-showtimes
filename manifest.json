@@ -6,7 +6,8 @@
   "version": "1.0",
 
   "permissions": [
-    "http://showtimes.tiagomestre.pt/"
+    "http://showtimes.tiagomestre.pt/",
+    "storage"
   ],
   "icons": { 
 		"32": "Popcorn - All-png.png",

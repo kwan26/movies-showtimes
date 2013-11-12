@@ -16,6 +16,7 @@ MS.Main = (function ($) {
      // PRIVATE ATTRIBUTES. ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE
     var _that = {};
     var _site = "http://showtimes.tiagomestre.pt";
+    
 
     // PRIVATE MEMBERS. ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE.
 
@@ -28,8 +29,10 @@ MS.Main = (function ($) {
         // PUBLIC MEMBERS ANYONE MAY READ/WRITE. (MAY BE OVERRIDEN).
         // PUBLIC METHOD THAT INITIALIZES MAIN APP.
         init: function () {
-            this.loadInits();
             _that = this;
+            _that.saved_tid  = [];
+            this.loadInits();
+            
         },
         
          /**
@@ -49,11 +52,13 @@ MS.Main = (function ($) {
            var  info = [];
              info[0] = 'f9c3071ea95b333';
              info[1] = '60e3dd0bed2523f6';
+             
+               var test =   _that.initgetOptions();
             
             
              $.ajax({
                 url: _site+"/api/v1/movies/info/favourites",
-                data: {info:info},
+                data: {info:test.options},
                 type: 'GET',
                 dataType: 'json', // added data type
                 beforeSend:function(){
@@ -73,8 +78,11 @@ MS.Main = (function ($) {
         initCallWebServiceTheates:function(){
             
             
-            var elOptions = $('.options');
-            
+            var elOptions = $('.options'),
+                 elCheck = $('.addhere');
+         
+            if(!elOptions.length) return false;
+            elCheck.html();
             
             $.ajax({
                // url: "http://movies.log.local/api/v1/movies/loures?apiKey=debugkey",
@@ -89,11 +97,17 @@ MS.Main = (function ($) {
                      var jsonResponse = res;
                      
                       for(var movies in jsonResponse){
+                     
+                          elCheck.append(" <label class='checkbox'>"
+                                  +"<input type='checkbox' name='theatres' value='"+jsonResponse[movies].tid+"'class='theatres'>"
+                                  +jsonResponse[movies].sala
+                                  +"</label>");
                           
                           //          <label class="checkbox">
                            // <input type="checkbox" name="theatres"> Check me out
                           //</label>
                       }
+                      _that.ingetOptions();
                      
                        
                 },
@@ -101,6 +115,68 @@ MS.Main = (function ($) {
                     
                 }
              });
+            
+        },
+        
+        
+        initSaveOptions:function(){
+          
+            var btn = $('.btn'),
+                 theatres = $('.theatres');
+         
+            btn.on('click',function(){
+               
+               var allVals = [];
+               
+               
+                $('.addhere :checked').each(function() {
+                  allVals.push($(this).val());
+                  
+                });
+                
+                 chrome.storage.local.set({
+                        'options': allVals
+                });
+                
+                if(!allVals.length) console.log("nop");
+                window.location = '';
+                
+                return false;
+            });
+        },
+        
+        ingetOptions:function(){
+      
+     
+            chrome.storage.local.get('options', function(data) {
+                
+                
+                var elOptions = $('.options');
+                
+                _that.saved_tid = data;
+               
+                console.log(data);
+                console.log( _that.saved_tid);
+                
+               
+               if(!elOptions.length) return false;
+               
+                $('input[name=theatres]').each(function() {
+                    
+                    var el = this;
+                 
+                 
+                    for(var i = 0; i < data.options.length; i++){
+                   
+                        if($(el).val() == data.options[i]){
+                            $(el).prop('checked', true);
+                        }
+                    }
+                    
+                });
+           
+                
+            });
             
         },
         
@@ -116,10 +192,16 @@ MS.Main = (function ($) {
             elNoService.hide();
             
               var  info = [];
-             info[0] = 'f9c3071ea95b333';
-             info[1] = '60e3dd0bed2523f6';
-        
-            $.ajax({
+            // info[0] = 'f9c3071ea95b333';
+            // info[1] = '60e3dd0bed2523f6';
+             
+             
+              chrome.storage.local.get('options', function(data) {
+                  
+                  info  = data.options;
+                  
+                  
+                  $.ajax({
                // url: "http://movies.log.local/api/v1/movies/loures?apiKey=debugkey",
                  url: "http://showtimes.tiagomestre.pt/api/v1/movies/info/favourites",
                  data: {info:info},
@@ -147,7 +229,7 @@ MS.Main = (function ($) {
                                     +"<div class='col-md-2 col-sm-3 text-center'>"
                                      +"<img  src='"+item[moviesshows].movie.poster+"' style='width:100px;height:159px' class='img-rounded'></a>"
                                      +"<div class='info'><h3>"+item[moviesshows].movie.name+"</h3>"
-                              
+                              +"<h4><span class='label label-danger' style='margin-bottom:10px;'>"+point1+"</span></h4> "
                                           +"<small style='font-family:courier,\'new courier\';' class='btn btn-primary btnNext'>"+item[moviesshows].movie.time+"</small>"
                                        
                                     +"</h4>"
@@ -179,6 +261,10 @@ MS.Main = (function ($) {
                      elNoService.show();
                 }
              });
+              });
+
+        
+            
             
         }
     };
