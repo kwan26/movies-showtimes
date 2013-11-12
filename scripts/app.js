@@ -221,9 +221,10 @@ MS.Main = (function ($) {
                           $("#movies").append("<h4><span class='label label-danger'>"+point1+"</span></h4>");
                           for(var moviesshows in item){
                               
-                              if(item[moviesshows].movie.trailer.length)
-                                   res_trailer = "<a href='"+item[moviesshows].movie.trailer+"' target='_blank' class='btn btn-primary btnNext'>Trailer</a><h4>" 
-                               
+                              if(item[moviesshows].movie.trailer.length){
+                                   res_trailer = "<a href='"+item[moviesshows].movie.trailer+"' target='_blank' class='btn btn-primary btnNext'>Trailer</a> " 
+                                   res_trailer +="<a href='http://www.imdb.com/title/"+item[moviesshows].movie.imdb+"' target='_blank' class='btn btn-primary btnNext'>Imdb</a><h4>" 
+                               }
                               $("#movies").append("<div class='row'>"
                                     +""
                                     +"<div class='col-md-2 col-sm-3 text-center'>"
@@ -236,6 +237,7 @@ MS.Main = (function ($) {
                             
                                    +"<h4><span class='label label-default'>"+item[moviesshows].movie.info+"</span></h4>"
                                        + res_trailer
+                               
                                     +"</div></div>"
                                  
                                   +"</div><hr>");
