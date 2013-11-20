@@ -173,7 +173,7 @@ a,a:hover {
 .btn-google-plus:hover {background-color:#C23836;color:#E45A58;}
 
 .row{
-    width: 350px;
+    /*width: 350px;*/
 }
 
 .img-rounded {
@@ -210,4 +210,8 @@ border: 1px solid transparent;
 border-radius: 4px;
 white-space: nowrap;
 
+}
+
+.label-danger a{
+    color:#fff;
 }

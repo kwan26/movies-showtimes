@@ -91,10 +91,11 @@ MS.Main = (function ($) {
                 type: 'GET',
                 dataType: 'json', // added data type
                 beforeSend:function(){
-                    
+                    $("#loading").show();
                 },
                 success: function(res) {
                      var jsonResponse = res;
+                        $("#loading").hide();
                      
                       for(var movies in jsonResponse){
                      
@@ -155,9 +156,6 @@ MS.Main = (function ($) {
                 
                 _that.saved_tid = data;
                
-                console.log(data);
-                console.log( _that.saved_tid);
-                
                
                if(!elOptions.length) return false;
                
@@ -180,6 +178,20 @@ MS.Main = (function ($) {
             
         },
         
+        initOpen:function(){
+        
+            
+            var open = $('.open');
+            
+            if(!open.length) return false;
+            
+            open.click(function(){
+                
+                chrome.tabs.create({url: "options.html"});
+               return false; 
+            });
+        },
+        
         
         initCallWebService:function(){
             
@@ -200,6 +212,14 @@ MS.Main = (function ($) {
                   
                   info  = data.options;
                   
+                  if(!info.length){
+                   
+                   
+                      return false;
+                  }
+                  
+                     $(".page-header").hide();
+                  
                   
                   $.ajax({
                // url: "http://movies.log.local/api/v1/movies/loures?apiKey=debugkey",
@@ -208,28 +228,61 @@ MS.Main = (function ($) {
                 type: 'GET',
                 dataType: 'json', // added data type
                 beforeSend:function(){
+                    
                     $("#loading").show();
                 },
                 success: function(res) {
+                
+                    $("#divSelect").show();
+            
+             $('#selectSala').bind('change', function () {
+                         
+                            var url = $(this).val(); // get selected value
+                            
+                             $('html,body').animate({scrollTop: $("#"+url).offset().top},'slow');
+                        });
                  $("#loading").hide();
                     var jsonResponse = res;
                         
                       var res_trailer;  
+                      var count = 1;
+                      var rating = "";
+                      var select_jump = " <option value=''>Escolha a sala</option>";
                       for(var point1 in jsonResponse.data){
                           var item = jsonResponse.data[point1];
                          
-                          $("#movies").append("<h4><span class='label label-danger'>"+point1+"</span></h4>");
+                        
+                          $('#selectSala').append('<option value="item-'+count+'">'+point1+'</option>');
+                      
+
+                          $("#movies").append("<h4><span class='label label-danger'><a id='item-"+count+"'>"+point1+"</a></span></h4>");
                           for(var moviesshows in item){
                               
                               if(item[moviesshows].movie.trailer.length){
                                    res_trailer = "<a href='"+item[moviesshows].movie.trailer+"' target='_blank' class='btn btn-primary btnNext'>Trailer</a> " 
-                                   res_trailer +="<a href='http://www.imdb.com/title/"+item[moviesshows].movie.imdb+"' target='_blank' class='btn btn-primary btnNext'>Imdb</a><h4>" 
+                                   res_trailer +="<a href='http://www.imdb.com/title/"+item[moviesshows].movie.imdb+"/' target='_blank' class='btn btn-primary btnNext'>Imdb</a>" 
+                                   res_trailer +="  <a href='#' class='btn btn-primary btnNext'>UP</a><h4>" 
                                }
+                               
+                               if(item[moviesshows].movie.poster.length){
+                                   test = item[moviesshows].movie.poster;
+                               }else{
+                                   test = "img/claquete_318-1578.jpg";
+                                  
+                               }
+                                if(item[moviesshows].movie.imdb_rating != "N/A"){
+                                    rating =  "<span class='glyphicon glyphicon-star'></span> "+item[moviesshows].movie.imdb_rating
+                                }else{
+                                    rating = "";
+                                }
+                               
+                               
                               $("#movies").append("<div class='row'>"
                                     +""
                                     +"<div class='col-md-2 col-sm-3 text-center'>"
-                                     +"<img  src='"+item[moviesshows].movie.poster+"' style='width:100px;height:159px' class='img-rounded'></a>"
+                                     +"<img  src='"+test+"' style='width:100px;height:159px' class='img-rounded'></a>"
                                      +"<div class='info'><h3>"+item[moviesshows].movie.name+"</h3>"
+                                     +rating
                               +"<h4><span class='label label-danger' style='margin-bottom:10px;'>"+point1+"</span></h4> "
                                           +"<small style='font-family:courier,\'new courier\';' class='btn btn-primary btnNext'>"+item[moviesshows].movie.time+"</small>"
                                        
@@ -237,7 +290,7 @@ MS.Main = (function ($) {
                             
                                    +"<h4><span class='label label-default'>"+item[moviesshows].movie.info+"</span></h4>"
                                        + res_trailer
-                               
+                                 
                                     +"</div></div>"
                                  
                                   +"</div><hr>");
@@ -255,8 +308,11 @@ MS.Main = (function ($) {
                          //      res_trailer = "";
                          res_trailer = "";
                             }
+                            count++;
                             
                       }
+                      
+                      
                 },
                 error:function(e){
                      $("#loading").hide();
@@ -279,5 +335,3 @@ jQuery(document).ready(function () {
     MS.Main.init();
    
 });
-
-
