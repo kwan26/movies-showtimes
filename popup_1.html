@@ -13,7 +13,7 @@
 		<!-- Scripts -->
 		<script src="js/jquery-2.0.3.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
-               
+                <script src="scripts/mustache.js"></script>
 		 <script src="scripts/app.js"></script>
 		<!-- Cascading Style Sheets -->
 		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -21,11 +21,6 @@
 	</head>
 	
 	<body>
-
-
-
- 
-
 
 <div class="container">
   <div class="row">
@@ -44,9 +39,47 @@
             
           
             <div id="movies">
-                <div style="display:none;" id="divSelect">Acesso Rápido : <select  id='selectSala'>
-                   <option value="">Seleccione uma sala</option>
-                </select>     
+                   
+                    <div id="sessions"></div>
+                     <script  type="text/template" id="simple">
+                    
+                     <div style="display:none;" id="divSelect">Acesso Rápido : <select  id='selectSala'>
+                         <option value="">Seleccione uma sala</option>
+                     </select>   
+                         
+                      {{#data.cinemas.length}}
+                      
+                            <h4>
+                            <span class='label label-danger'>
+                               <a id='item-{{index}}'></a>
+                            </span>
+                            </h4>
+                            {{#data.cinemas}}
+                                {{#.}}
+                               <div class='row'>
+                                    <div class='col-md-2 col-sm-3 text-center'>
+                                        <img  src='"+test+"' style='width:100px;height:159px' class='img-rounded'></a>
+                                        <div class='info'>
+                                            <h3>{{&movie.name}}</h3>
+                                            <h4>
+                                                <span class='label label-danger' style='margin-bottom:10px;'>
+                                                {{movie.sala}}
+                                                </span>
+                                            </h4>
+                                         <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
+                                            {{& movie.time}}
+                                         </small>
+                                        <h4><span class='label label-default'>{{ & movie.info}}</span></h4>
+                                        </div></div>
+                                    </div>
+                               </div>
+                                {{/.}}
+                               
+                            {{/data.cinemas}}
+                            
+                       {{/data.cinemas.length}}
+                    </script>   
+                    
                 </div>
             </div>
             

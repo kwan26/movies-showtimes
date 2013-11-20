@@ -57,7 +57,7 @@ MS.Main = (function ($) {
             
             
              $.ajax({
-                url: _site+"/api/v1/movies/info/favourites",
+                url: _site+"/api/v2/movies/info/favourites",
                 data: {info:test.options},
                 type: 'GET',
                 dataType: 'json', // added data type
@@ -223,7 +223,7 @@ MS.Main = (function ($) {
                   
                   $.ajax({
                // url: "http://movies.log.local/api/v1/movies/loures?apiKey=debugkey",
-                 url: "http://showtimes.tiagomestre.pt/api/v1/movies/info/favourites",
+                 url: "http://showtimes.tiagomestre.pt/api/v2/movies/info/favourites",
                  data: {info:info},
                 type: 'GET',
                 dataType: 'json', // added data type
@@ -243,17 +243,39 @@ MS.Main = (function ($) {
                         });
                  $("#loading").hide();
                     var jsonResponse = res;
+                    
+                    
+                       var tmpl = $('#simple').html();
+                      
+                      
+                        
+                       
+                          $("#sessions").html(Mustache.render(tmpl,jsonResponse ));
+                          
+                          console.log(jsonResponse);
+                          return;
                         
                       var res_trailer;  
+                      var cinemas =[]; 
                       var count = 1;
                       var rating = "";
+                         cinemas["data"] = [];
+                      cinemas["data"]["cinemas"] = []; 
                       var select_jump = " <option value=''>Escolha a sala</option>";
+                       var a= 0;
                       for(var point1 in jsonResponse.data){
                           var item = jsonResponse.data[point1];
-                         
-                        
+                       
+                        /* var data =   {
+                      images: [
+                          { src: "http://www.fpoimg.com/20x20" },
+                          { src: "http://www.fpoimg.com/30x30" },
+                          { src: "http://www.fpoimg.com/40x40" }
+                      ],
+                      anEmptyArray: []};*/
+                     
                           $('#selectSala').append('<option value="item-'+count+'">'+point1+'</option>');
-                      
+                          
 
                           $("#movies").append("<h4><span class='label label-danger'><a id='item-"+count+"'>"+point1+"</a></span></h4>");
                           for(var moviesshows in item){
@@ -307,11 +329,16 @@ MS.Main = (function ($) {
                          //              "</div>");  
                          //      res_trailer = "";
                          res_trailer = "";
+                          a++;
                             }
+                           
                             count++;
                             
                       }
+                       
                       
+                   console.log(cinemas);
+                  
                       
                 },
                 error:function(e){
