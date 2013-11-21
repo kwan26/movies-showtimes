@@ -55,21 +55,22 @@
                             </span>
                             </h4>
                             {{#data.cinemas}}
-                                {{#.}}
+                               {{#.}}
+                                    
                                <div class='row'>
                                     <div class='col-md-2 col-sm-3 text-center'>
                                         <img  src='"+test+"' style='width:100px;height:159px' class='img-rounded'></a>
                                         <div class='info'>
-                                            <h3>{{&movie.name}}</h3>
+                                            <h3>{{&name}}</h3>
                                             <h4>
                                                 <span class='label label-danger' style='margin-bottom:10px;'>
-                                                {{movie.sala}}
+                                                {{sala}}
                                                 </span>
                                             </h4>
                                          <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
-                                            {{& movie.time}}
+                                            {{& time}}
                                          </small>
-                                        <h4><span class='label label-default'>{{ & movie.info}}</span></h4>
+                                        <h4><span class='label label-default'>{{ & info}}</span></h4>
                                         </div></div>
                                     </div>
                                </div>
