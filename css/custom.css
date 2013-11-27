@@ -173,7 +173,7 @@ a,a:hover {
 .btn-google-plus:hover {background-color:#C23836;color:#E45A58;}
 
 .row{
-    /*width: 350px;*/
+    min-width: 290px;
 }
 
 .img-rounded {
@@ -215,3 +215,9 @@ white-space: nowrap;
 .label-danger a{
     color:#fff;
 }
+
+.ui-widget-content {}
+
+.ui-widget-header{border: 1px solid #fff;background:#fff ! important;}
+.ui-widget-content a{color:#fff}
+.ui-tabs .ui-tabs-panel{min-width: 350px !important;}

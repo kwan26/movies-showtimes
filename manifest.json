@@ -3,12 +3,12 @@
 
   "name": "Movies Showtimes",
   "description": "This extension demonstrates the showtimes near you",
-  "version": "1.0",
-
+  "version": "1.0.4.1",
   "permissions": [
     "http://showtimes.tiagomestre.pt/",
     "storage",
-    "notifications"
+    "notifications",
+    "background"
   ],
   "icons": { 
 		"32": "Popcorn - All-png.png",

@@ -75,7 +75,7 @@ MS.Main = (function($) {
         },
         initCallWebServiceTheates: function() {
 
-
+      
             var elOptions = $('.options'),
                     elCheck = $('.addhere');
 
@@ -195,6 +195,9 @@ MS.Main = (function($) {
 
             if (elOptions.length)
                 return false;
+             $(function() {
+                            $( "#tabs" ).tabs();
+                          });
 
 
             elNoService.hide();
@@ -214,7 +217,7 @@ MS.Main = (function($) {
                     return false;
                 }
 
-                $(".page-header").hide();
+                $(".header_te").hide();
 
 
                 $.ajax({
@@ -241,8 +244,9 @@ MS.Main = (function($) {
                         var template = Handlebars.compile(tmpl);
                         
                          result = template(jsonResponse);
+                         console.log(jsonResponse.data.cinemas);
                        
-                        $("#sessions").html(result);
+                        $("#tabs #sessions").html(result);
                        // $("#sessions").html(Mustache.render(tmpl, jsonResponse));
                       
                         $('#selectSala').bind('change', function() {
@@ -250,8 +254,9 @@ MS.Main = (function($) {
                             var url = $(this).val(); // get selected value
                            
                             $('html,body').animate({scrollTop: $(url).offset().top}, 'slow');
+                            $("#selectSala").val(0);
                         });
-
+                         
                     },
                     error: function(e) {
                         $("#loading").hide();
@@ -259,10 +264,22 @@ MS.Main = (function($) {
                     }
                 });
             });
+        },
+        initNotification:function(){
+            
+         
+            chrome.notifications.create(
+              'id1',{   
+                  type: 'basic', 
+                
+                  title: 'Althe Frazon', 
+                  message: "Hi, what's going on tonight?",
+                
+                  priority: 0},
+              function() { /* Error checking goes here */} 
 
-
-
-
+            ); 
+            
         }
     };
 }(jQuery));

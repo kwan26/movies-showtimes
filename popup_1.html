@@ -9,11 +9,13 @@
 
         <!-- Scripts -->
         <script src="js/jquery-2.0.3.min.js"></script>
+        <script src="scripts/jquery-ui-1.10.3.custom.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="scripts/backbone.min.js"></script>
+        <!--<script src="scripts/backbone.min.js"></script>-->
         <script src="scripts/handlebars-v1.1.2.js"></script>
         <script src="scripts/app.js"></script>
         <!-- Cascading Style Sheets -->
+        <link href="css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" media="screen">
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="css/custom.css" rel="stylesheet" media="screen">		
     </head>
@@ -27,23 +29,43 @@
 
                     <div class="panel">
                         <div class="panel-body">
-                            <div class="page-header">
-                                Adicione os seus cinemas favoritos<br />
-                                <a href='#'  class='btn btn-primary btnNext open'>Opções</a>
-                            </div>
-                            <div id="loading" style="display: none;">
-                                <img src="/loading_red.gif" alt="loading...">
-                            </div>
-
-
+                            
+                           
+                            
+                           
                             <div id="movies">
 
                                 <div id="sessions"></div>
-                                <script type="text/x-handlebars-template" id="simple">
+                                 <div id="tabs" style="min-width: 370px;">
+                                    <ul>
+                                      <li><a href="#tabs-1">Salas</a></li>
+                                      <li><a href="#tabs-2">Estreias</a></li>
+                                      <li><a href="#tabs-3">Próximas estreias</a></li>
 
+                                    </ul>
+                                    <div id="tabs-1" >
+                                         <div class="header_te">
+                                            Adicione os seus cinemas favoritos<br />
+                                            <a href='#'  class='btn btn-primary btnNext open'>Opções</a>
+                                        </div>
+                                          <div id="loading" style="display: none;">
+                                            <img src="/loading_red.gif" alt="loading...">
+                                        </div>
+                                         <div id="sessions"></div>
+                                    </div>
+                                    <div id="tabs-2">
+
+                                    </div>
+                                    <div id="tabs-3">
+
+                                    </div>
+                                  </div> 
+                                <script type="text/x-handlebars-template" id="simple">
+                                    
+                                   
         <div id="divSelect">
         <select  id='selectSala'>
-            <option value="">Seleccione uma sala</option>
+            <option value="0">Seleccione uma sala</option>
                 {{#each theatre}}
                     
                     <option value="#index-{{@index}}">{{&name}}</option>
@@ -83,6 +105,9 @@
                              <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
                                 {{& time}}
                              </small>
+                             {{#if imdb_rating}}
+                                <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{imdb_rating}}/10</span></span>
+                             {{/if}}
                             <h4><span class='label label-default'>{{&info}}</span></h4>
                             {{#if trailer}}
                                 <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
