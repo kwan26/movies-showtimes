@@ -84,7 +84,11 @@
                                                   <div class='info'>
                                                      <h3>{{&nome_pt}}</h3>
                                                  
-                                             
+                                                  {{#if time}}
+                                                  <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
+                                                    {{& time}}
+                                                     {{/if}}
+                                                  </small>
                                                   {{#if rating}}
                                                      <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
                                                   {{/if}}
@@ -128,8 +132,11 @@
 
                                                   <div class='info'>
                                                      <h3>{{&nome_pt}}</h3>
-                                                   
-                                                 
+                                                 {{#if time}}
+                                                  <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
+                                                    {{& time}}
+                                                     {{/if}}
+                                                  </small>
                                                   {{#if rating}}
                                                      <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
                                                   {{/if}}
