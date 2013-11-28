@@ -54,12 +54,103 @@
                                          <div id="sessions"></div>
                                     </div>
                                     <div id="tabs-2">
-
+                                         <div id="sessions_estreias"></div>
                                     </div>
                                     <div id="tabs-3">
-
+                                        <div id="sessions_upcoming"></div>
                                     </div>
                                   </div> 
+                                
+                                
+                                  <script type="text/x-handlebars-template" id="estreias">
+                                    
+                                      <h4>
+                                        <span class='label label-default'>
+                                           Data de estreia : {{date_premiere}}
+                                        </span>
+                                         </h4>
+                                      {{#each estreias}}
+                                        
+                                      
+                                        <div class='row'>
+                                             <div class='col-md-2 col-sm-3 text-center'>
+                                                 {{#if poster}}
+                                                    <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
+                                                 {{else}}
+
+                                                    <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
+                                                 {{/if}}       
+
+                                                  <div class='info'>
+                                                     <h3>{{&nome_pt}}</h3>
+                                                 
+                                             
+                                                  {{#if rating}}
+                                                     <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
+                                                  {{/if}}
+                                                 <h4><span class='label label-default'>{{&info}}</span></h4>
+                                                 {{#if trailer}}
+                                                     <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
+                                                 {{/if}}
+                                                 {{#if imdb}}        
+                                                     <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
+                                                 {{/if}}
+                                                        <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
+                                                 </div></div>
+                                             </div>
+                                        </div><hr>
+                                     {{else}}
+                                        sem estreias
+                                     {{/each}}
+
+
+                                    
+                                 </script>
+                                 
+                                  <script type="text/x-handlebars-template" id="upcoming">
+                                    
+                                      <h4>
+                                        <span class='label label-default'>
+                                           Data de estreia : {{date_next_week}}
+                                        </span>
+                                         </h4>
+                                      {{#each next_week}}
+                                        
+                                      
+                                        <div class='row'>
+                                             <div class='col-md-2 col-sm-3 text-center'>
+                                                 {{#if poster}}
+                                                    <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
+                                                 {{else}}
+
+                                                    <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
+                                                 {{/if}}       
+
+                                                  <div class='info'>
+                                                     <h3>{{&nome_pt}}</h3>
+                                                   
+                                                 
+                                                  {{#if rating}}
+                                                     <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
+                                                  {{/if}}
+                                                 <h4><span class='label label-default'>{{&info}}</span></h4>
+                                                 {{#if trailer}}
+                                                     <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
+                                                 {{/if}}
+                                                 {{#if imdb}}        
+                                                     <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
+                                                 {{/if}}
+                                                        <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
+                                                 </div></div>
+                                             </div>
+                                        </div><hr>
+                                     {{else}}
+                                        sem estreias
+                                     {{/each}}
+
+
+                                    
+                                 </script>
                                 <script type="text/x-handlebars-template" id="simple">
                                     
                                    

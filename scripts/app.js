@@ -239,14 +239,26 @@ MS.Main = (function($) {
 
 
                         var tmpl = $('#simple').html();
-                       
+                        var tmpl_estreias = $('#estreias').html();
+                        var tmpl_upcoming = $('#upcoming').html();
                         //var source   = $("#entry-template").html();
                         var template = Handlebars.compile(tmpl);
                         
                          result = template(jsonResponse);
-                         console.log(jsonResponse.data.cinemas);
-                       
+                         console.log(jsonResponse);
+                         
+                         var template_estreias = Handlebars.compile(tmpl_estreias);
+                        
+                         result_estreias = template_estreias(jsonResponse);
                         $("#tabs #sessions").html(result);
+                        
+                        
+                         $("#tabs #sessions_estreias").html(result_estreias);
+                         
+                          var template_upcoming = Handlebars.compile(tmpl_upcoming);
+                          result_upcoming = template_upcoming(jsonResponse);
+                          $("#tabs #sessions_upcoming").html(result_upcoming);
+                          
                        // $("#sessions").html(Mustache.render(tmpl, jsonResponse));
                       
                         $('#selectSala').bind('change', function() {
