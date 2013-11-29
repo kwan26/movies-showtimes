@@ -196,7 +196,7 @@ MS.Main = (function($) {
             if (elOptions.length)
                 return false;
              $(function() {
-                            $( "#tabs" ).tabs();
+                            $( "#tabs" ).tab();
                           });
 
 
@@ -212,7 +212,47 @@ MS.Main = (function($) {
                 info = data.options;
 
                 if (!info.length) {
+                    
+                    
+                        $.ajax({
+                    // url: "http://movies.log.local/api/v1/movies/loures?apiKey=debugkey",
+                        url: "http://showtimes.tiagomestre.pt/api/v2/movies/info/favourites",
 
+                        type: 'GET',
+                        dataType: 'json', // added data type
+                        beforeSend: function() {
+
+                          
+                            $("#loading-estreias").show();
+                            $("#loading-upcoming").show();
+                        },
+                        success: function(res) {
+                         
+                             $("#loading-estreias").hide();
+                            $("#loading-upcoming").hide();
+                            var tmpl_estreias = $('#estreias').html();
+                            var tmpl_upcoming = $('#upcoming').html();
+                            //var source   = $("#entry-template").html();
+
+                         
+                             var template_estreias = Handlebars.compile(tmpl_estreias);
+
+                         result_estreias = template_estreias(res);
+                
+                         $("#tabs #sessions_estreias").html(result_estreias);
+                         
+                          var template_upcoming = Handlebars.compile(tmpl_upcoming);
+                          result_upcoming = template_upcoming(res);
+                          $("#tabs #sessions_upcoming").html(result_upcoming);
+                            
+                        },
+                        error: function(e) {
+                            $("#loading").hide();
+                            $("#loading-estreias").hide();
+                            $("#loading-upcoming").hide();
+                            elNoService.show();
+                        }
+                    });
 
                     return false;
                 }
@@ -229,10 +269,15 @@ MS.Main = (function($) {
                     beforeSend: function() {
 
                         $("#loading").show();
+                        $("#loading-estreias").show();
+                        $("#loading-upcoming").show();
                     },
                     success: function(res) {
 
                         $("#divSelect").show();
+                         
+                        $("#loading-estreias").hide();
+                         $("#loading-upcoming").hide();
 
                         $("#loading").hide();
                         var jsonResponse = res;
@@ -272,6 +317,8 @@ MS.Main = (function($) {
                     },
                     error: function(e) {
                         $("#loading").hide();
+                        $("#loading-estreias").hide();
+                        $("#loading-upcoming").hide();
                         elNoService.show();
                     }
                 });

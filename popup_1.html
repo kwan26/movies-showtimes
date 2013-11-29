@@ -29,200 +29,218 @@
 
                     <div class="panel">
                         <div class="panel-body">
-                            
-                           
-                            
-                           
+
+
+
+
                             <div id="movies">
 
                                 <div id="sessions"></div>
-                                 <div id="tabs" style="min-width: 370px;">
-                                    <ul>
-                                      <li><a href="#tabs-1">Salas</a></li>
-                                      <li><a href="#tabs-2">Estreias</a></li>
-                                      <li><a href="#tabs-3">Próximas estreias</a></li>
+                                <div id="tabs"  style="min-width: 370px;">
+                                    <ul  class="nav nav-tabs">
+                                        <li  class="active"><a href="#tabs-1" data-toggle="tab">Salas</a></li>
+                                        <li><a href="#tabs-2" data-toggle="tab">Estreias</a></li>
+                                        <li><a href="#tabs-3" data-toggle="tab">Próximas estreias</a></li>
 
                                     </ul>
-                                    <div id="tabs-1" >
-                                         <div class="header_te">
-                                            Adicione os seus cinemas favoritos<br />
-                                            <a href='#'  class='btn btn-primary btnNext open'>Opções</a>
+                                    <div class="tab-content">
+                                        <div id="tabs-1"  class="tab-pane fade in active" >
+                                            <div class="header_te">
+                                                Adicione os seus cinemas favoritos<br />
+                                                <a href='#'  class='btn btn-primary btnNext open'>Opções</a>
+                                            </div>
+                                            <div id="loading" style="display: none;">
+                                                <img src="/loading_red.gif" alt="loading...">
+                                            </div>
+                                            <div id="sessions"></div>
                                         </div>
-                                          <div id="loading" style="display: none;">
-                                            <img src="/loading_red.gif" alt="loading...">
+                                        <div id="tabs-2" class="tab-pane fade">
+                                             <div id="loading-estreias" style="display: none;">
+                                                <img src="/loading_red.gif" alt="loading...">
+                                            </div>
+                                            <div id="sessions_estreias"></div>
                                         </div>
-                                         <div id="sessions"></div>
+                                        <div id="tabs-3" class="tab-pane fade">
+                                             <div id="loading-upcoming" style="display: none;">
+                                                <img src="/loading_red.gif" alt="loading...">
+                                            </div>
+                                            <div id="sessions_upcoming"></div>
+                                        </div>
+                                    </div> 
+                                </div>
+
+
+                                <script type="text/x-handlebars-template" id="estreias">
+
+                                    <h4>
+                                    <span class='label label-default'>
+                                    Esta Semana : {{date_premiere}}
+                                    </span>
+                                    </h4>
+                                    {{#each estreias}}
+
+                                    {{#if imdb}}
+                                    <div class='row'>
+                                    <div class='col-md-2 col-sm-3 text-center'>
+                                    {{#if poster}}
+                                    <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
+                                    {{else}}
+
+                                    <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
+                                    {{/if}}       
+
+                                    <div class='info'>
+                                    <h3>{{&nome_pt}}</h3>
+                                    {{#if rating}}
+                                    <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
+                                    <br />
+                                    {{/if}}
+
+                                    {{#if time}}
+                                    <br />  
+                                    <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
+                                    {{& time}}
+                                    {{/if}}
+                                    </small>
+                                    <br />
+
+                                    <h4><span class='label label-default'>{{&info}}</span></h4>
+                                    {{#if trailer}}
+                                    <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
+                                    {{/if}}
+                                    {{#if imdb}}        
+                                    <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
+                                    {{/if}}
+                                    <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
+                                    </div></div>
                                     </div>
-                                    <div id="tabs-2">
-                                         <div id="sessions_estreias"></div>
+                                    </div><hr>
+                                    {{/if}}
+                                    {{else}}
+                                    sem estreias
+                                    {{/each}}
+
+
+
+                                </script>
+
+                                <script type="text/x-handlebars-template" id="upcoming">
+
+                                    <h4>
+                                    <span class='label label-default'>
+                                    Próxima semana : {{date_next_week}}
+                                    </span>
+                                    </h4>
+                                    {{#each next_week}}
+
+                                    {{#if imdb}}
+                                    <div class='row'>
+                                    <div class='col-md-2 col-sm-3 text-center'>
+                                    {{#if poster}}
+                                     <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
+                                    {{else}}
+
+                                        <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
+                                    {{/if}}       
+
+                                    <div class='info'>
+                                    <h3>{{&nome_pt}}</h3>
+                                    {{#if rating}}
+                                         <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
+                                    <br />
+                                    {{/if}}
+
+                                    {{#if time}}
+                                    <br />  
+                                          <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
+                                    {{& time}}
+                                    {{/if}}
+                                    </small>
+                                    <br />
+                                    <h4><span class='label label-default'>{{&info}}</span></h4>
+                                    {{#if trailer}}
+                                        <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
+                                    {{/if}}
+                                    {{#if imdb}}        
+                                         <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
+                                    {{/if}}
+                                         <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
+                                    </div></div>
                                     </div>
-                                    <div id="tabs-3">
-                                        <div id="sessions_upcoming"></div>
-                                    </div>
-                                  </div> 
-                                
-                                
-                                  <script type="text/x-handlebars-template" id="estreias">
-                                    
-                                      <h4>
-                                        <span class='label label-default'>
-                                           Data de estreia : {{date_premiere}}
-                                        </span>
-                                         </h4>
-                                      {{#each estreias}}
-                                        
-                                      
-                                        <div class='row'>
-                                             <div class='col-md-2 col-sm-3 text-center'>
-                                                 {{#if poster}}
-                                                    <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
-                                                 {{else}}
-
-                                                    <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
-                                                 {{/if}}       
-
-                                                  <div class='info'>
-                                                     <h3>{{&nome_pt}}</h3>
-                                                 
-                                                  {{#if time}}
-                                                  <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
-                                                    {{& time}}
-                                                     {{/if}}
-                                                  </small>
-                                                  {{#if rating}}
-                                                     <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
-                                                  {{/if}}
-                                                 <h4><span class='label label-default'>{{&info}}</span></h4>
-                                                 {{#if trailer}}
-                                                     <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
-                                                 {{/if}}
-                                                 {{#if imdb}}        
-                                                     <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
-                                                 {{/if}}
-                                                        <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
-                                                 </div></div>
-                                             </div>
-                                        </div><hr>
-                                     {{else}}
-                                        sem estreias
-                                     {{/each}}
+                                    </div><hr>
+                                    {{/if}}
+                                    {{else}}
+                                     sem estreias
+                                    {{/each}}
 
 
-                                    
-                                 </script>
-                                 
-                                  <script type="text/x-handlebars-template" id="upcoming">
-                                    
-                                      <h4>
-                                        <span class='label label-default'>
-                                           Data de estreia : {{date_next_week}}
-                                        </span>
-                                         </h4>
-                                      {{#each next_week}}
-                                        
-                                      
-                                        <div class='row'>
-                                             <div class='col-md-2 col-sm-3 text-center'>
-                                                 {{#if poster}}
-                                                    <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
-                                                 {{else}}
 
-                                                    <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
-                                                 {{/if}}       
-
-                                                  <div class='info'>
-                                                     <h3>{{&nome_pt}}</h3>
-                                                 {{#if time}}
-                                                  <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
-                                                    {{& time}}
-                                                  </small>
-                                                     {{/if}}
-                                                  {{#if rating}}
-                                                     <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{rating}}/10</span></span>
-                                                  {{/if}}
-                                                 <h4><span class='label label-default'>{{&info}}</span></h4>
-                                                 {{#if trailer}}
-                                                     <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
-                                                 {{/if}}
-                                                 {{#if imdb}}        
-                                                     <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
-                                                 {{/if}}
-                                                        <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
-                                                 </div></div>
-                                             </div>
-                                        </div><hr>
-                                     {{else}}
-                                        sem estreias
-                                     {{/each}}
-
-
-                                    
-                                 </script>
+                                </script>
                                 <script type="text/x-handlebars-template" id="simple">
-                                    
-                                   
-        <div id="divSelect">
-        <select  id='selectSala'>
-            <option value="0">Seleccione uma sala</option>
-                {{#each theatre}}
-                    
-                    <option value="#index-{{@index}}">{{&name}}</option>
-                 {{/each}}
-                         
-        </select>   
-       </div>
 
-     {{#each data.cinemas}}
-          
-          
- 
-                <h4>
-               <span class='label label-danger'>
-                  <a id="index-{{@index}}">{{&salas}}</a>
-               </span>
-                </h4>
 
-            
-                   {{#each sessoes}}
-                   <div class='row'>
-                        <div class='col-md-2 col-sm-3 text-center'>
-                            {{#if poster}}
-                               <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
-                            {{else}}
-                         
-                               <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
-                            {{/if}}       
+                                    <div id="divSelect" style="margin-top:10px;">
+                                    <select  id='selectSala'>
+                                    <option value="0">Seleccione uma sala</option>
+                                    {{#each theatre}}
 
-                             <div class='info'>
-                                <h3>{{&name}}</h3>
-                                <h4>
+                                    <option value="#index-{{@index}}">{{&name}}</option>
+                                    {{/each}}
+
+                                    </select>   
+                                    </div>
+
+                                    {{#each data.cinemas}}
+
+
+
+                                    <h4>
+                                    <span class='label label-danger'>
+                                    <a id="index-{{@index}}">{{&salas}}</a>
+                                    </span>
+                                    </h4>
+
+
+                                    {{#each sessoes}}
+                                    <div class='row'>
+                                    <div class='col-md-2 col-sm-3 text-center'>
+                                    {{#if poster}}
+                                    <img  src="{{poster}}" style='width:100px;height:159px' class='img-rounded'></a>
+                                    {{else}}
+
+                                    <img  src="img/claquete_318-1578.jpg" style='width:100px;height:159px' class='img-rounded'></a>
+                                    {{/if}}       
+
+                                    <div class='info'>
+                                    <h3>{{&name}}</h3>
+                                    <h4>
                                     <span class='label label-danger' style='margin-bottom:10px;'>
                                     {{sala}}
                                     </span>
-                                </h4>
-                             <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
-                                {{& time}}
-                             </small>
-                             {{#if imdb_rating}}
-                                <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{imdb_rating}}/10</span></span>
-                             {{/if}}
-                            <h4><span class='label label-default'>{{&info}}</span></h4>
-                            {{#if trailer}}
-                                <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
-                            {{/if}}
-                            {{#if imdb}}        
-                                <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
-                            {{/if}}
-                                   <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
-                            </div></div>
-                        </div>
-                   </div><hr>
-                {{else}}
-                   sem sessoes
-                {{/each}}
+                                    </h4>
+                                    <small style='font-family:courier','new courier';' class='btn btn-primary btnNext'>
+                                    {{& time}}
+                                    </small>
+                                    {{#if imdb_rating}}
+                                    <span class="glyphicon glyphicon-film"><span style="margin-left:5px;">{{imdb_rating}}/10</span></span>
+                                    {{/if}}
+                                    <h4><span class='label label-default'>{{&info}}</span></h4>
+                                    {{#if trailer}}
+                                    <a href='{{trailer}}' target='_blank' class='btn btn-primary btnNext'>Trailer</a>
+                                    {{/if}}
+                                    {{#if imdb}}        
+                                    <a href='http://www.imdb.com/title/{{imdb}}/' target='_blank' class='btn btn-primary btnNext'>Imdb</a> 
+                                    {{/if}}
+                                    <a href='#' class='btn btn-primary btnNext'>Ir para o topo</a><h4> 
+                                    </div></div>
+                                    </div>
+                                    </div><hr>
+                                    {{else}}
+                                    sem sessoes
+                                    {{/each}}
 
 
-      {{/each}}
+                                    {{/each}}
                                 </script>   
 
                             </div>

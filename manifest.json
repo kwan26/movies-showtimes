@@ -3,7 +3,7 @@
 
   "name": "Movies Showtimes",
   "description": "This extension demonstrates the showtimes near you",
-  "version": "1.0.4.1",
+  "version": "1.0.5",
   "permissions": [
     "http://showtimes.tiagomestre.pt/",
     "storage",
