@@ -1,14 +1,11 @@
 {
   "manifest_version": 2,
-  "background": { "scripts": ["scripts/jquery.min.js","scripts/background.js"] },
   "name": "Movies Showtimes",
   "description": "This extension demonstrates the showtimes near you",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "permissions": [
     "http://showtimes.tiagomestre.pt/",
-    "storage",
-    "notifications",
-    "background"
+    "storage"
   ],
   "icons": { 
 		"32": "Popcorn - All-png.png",

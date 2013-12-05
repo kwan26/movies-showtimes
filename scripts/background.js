@@ -13,22 +13,39 @@ function show() {
     var period = time[1] < 12 ? 'a.m.' : 'p.m.'; // The period of the day.
 
     $.ajax({
-        // url: "http://movies.log.local/api/v1/movies/loures?apiKey=debugkey",
         url: "http://showtimes.tiagomestre.pt/api/v2/movies/info/favourites",
         type: 'GET',
         dataType: 'json',
         success: function(res) {
-
-            for (var i = 0; i < res.estreias.length; i++) {
-                var notification = window.webkitNotifications.createNotification(
-                        'img/claquete_318-1578.jpg', // The image.
-                        "Estreias da Semana", // The title.
-                        res.estreias[i].nome_pt     // The body.
-                        );
-                notification.show();
                 
-               
+            var allVals = [];
+            var date_premiere;    
+            var poster;
+            for (var i = 0; i < res.estreias.length; i++) {
+             
+              date_premiere = res.date_premiere;
+              allVals.push(" - "+res.estreias[i].nome_pt);
+              
+               /*   var notification = window.webkitNotifications.createNotification(
+                        res.estreias[i].poster, // The image.
+                        "Estreias da Semana "+date_premiere, // The title.
+                       res.estreias[i].nome_pt    // The body.
+                        );
+                    notification.show();
+             */ 
+                  
             }
+            
+              poster = res.estreias[Math.floor(Math.random()*res.estreias.length)];
+           
+            
+            var notification = window.webkitNotifications.createNotification(
+                       poster.poster, // The image.
+                        "Estreias da Semana "+date_premiere, // The title.
+                        allVals.reverse().join("\n")    // The body.
+                        );
+            notification.show();
+            
             var num = res.estreias.length;
             
              chrome.browserAction.setBadgeText({
@@ -37,6 +54,9 @@ function show() {
 
         },
         error: function(e) {
+            chrome.browserAction.setBadgeText({
+                    text:""
+                });
 
         }
     });
@@ -79,7 +99,6 @@ chrome.storage.local.get('notifications', function(data) {
         }
 
     }
-    // $('.notif :checked').prop('checked',)
 });
 
 
