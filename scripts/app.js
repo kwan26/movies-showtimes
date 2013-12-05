@@ -81,20 +81,6 @@ MS.Main = (function($) {
 
             if (!elOptions.length)
                 return false;
-            
-             chrome.storage.local.get('notifications', function(data){
-               
-               if(data.notifications.length) return false;
-              
-                 if(data.notifications){
-                     $('.notif :checked').prop('checked',true);
-                 }else{
-                      $('.notif :checked').prop('checked',false);
-                 }
-                // $('.notif :checked').prop('checked',)
-             });
-            
-            
             elCheck.html();
 
             $.ajax({
@@ -144,14 +130,9 @@ MS.Main = (function($) {
                     allVals.push($(this).val());
 
                 });
-                var elNotif = false;
-                if($('.notif :checked').prop('checked')){
-                    elNotif = true;
-                }
 
                 chrome.storage.local.set({
-                    'options': allVals,
-                    'notifications' : elNotif
+                    'options': allVals
                 });
 
                 if (!allVals.length)
@@ -162,8 +143,8 @@ MS.Main = (function($) {
             });
         },
         ingetOptions: function() {
-            
-            
+
+
             chrome.storage.local.get('options', function(data) {
 
 
@@ -211,7 +192,15 @@ MS.Main = (function($) {
 
             var elNoService = $("#feed-empty"),
                     elOptions = $('.options');
+            
+            
+            $("#settings").click(function() {
 
+                chrome.tabs.create({url: "options.html"});
+                return false;
+            });
+            
+            
             if (elOptions.length)
                 return false;
              $(function() {
@@ -219,26 +208,13 @@ MS.Main = (function($) {
                           });
 
 
-
-             $("#settings").click(function() {
-
-                chrome.tabs.create({url: "options.html"});
-                return false;
-            });
-
             elNoService.hide();
 
             var info = [];
-            // info[0] = 'f9c3071ea95b333';
-            // info[1] = '60e3dd0bed2523f6';
-
-            var ret = new Date();
-           
-            ret.setDate(ret.getDate() + (3 - 1 - ret.getDay() + 7) % 7 + 1);
             
             
-             
-   
+            
+            
             chrome.storage.local.get('options', function(data) {
 
                 info = data.options;
@@ -355,22 +331,6 @@ MS.Main = (function($) {
                     }
                 });
             });
-        },
-        initNotification:function(){
-            
-         
-            chrome.notifications.create(
-              'id1',{   
-                  type: 'basic', 
-                
-                  title: 'Althe Frazon', 
-                  message: "Hi, what's going on tonight?",
-                
-                  priority: 0},
-              function() { /* Error checking goes here */} 
-
-            ); 
-            
         }
     };
 }(jQuery));
